@@ -9,6 +9,7 @@ public abstract class Route implements spark.Route {
 
 	@Override
 	public Object handle(spark.Request request, spark.Response response) {
+		response.cookie("cookieName", "hey I'm a cookie");
 		return handle(new SparkRequest(request), new SparkResponse(response));
 	}
 

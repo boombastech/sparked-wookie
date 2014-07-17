@@ -41,9 +41,39 @@ public class SparkRequest implements Request {
 				}
 				queryParams.put(parameter, values);
 			}
-			catch (IllegalArgumentException illegalArgumentException) {}
+			catch (IllegalArgumentException illegalArgumentException) {
+				System.out.println(String.format("Query parameter with invalid name: %s found on request", key));
+			}
 		}
 
 		return queryParams;
+	}
+
+	@Override
+	public String getCookie(Cookie cookie) {
+		Map<String, String> cookies = wrappedRequest.cookies();
+
+		if (cookies.containsKey(cookie.name())) {
+			return cookies.get(cookie.name());
+		}
+
+		return "";
+	}
+
+	@Override
+	public Map<Cookie, String> getAllCookies() {
+		Map<Cookie, String> cookieMap = newHashMap();
+		Map<String, String> cookies = wrappedRequest.cookies();
+		for (String key : cookies.keySet()) {
+			try {
+				Cookie cookie = Cookie.valueOf(key);
+				cookieMap.put(cookie, cookies.get(key));
+			}
+			catch (IllegalArgumentException illegalArgumentException) {
+				System.out.println(String.format("Cookie with invalid name: %s found on request", key));
+			}
+		}
+
+		return cookieMap;
 	}
 }

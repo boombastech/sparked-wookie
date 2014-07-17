@@ -6,4 +6,9 @@ import java.util.Map;
 public interface Request {
 	List<String> getQueryParameter(Parameter parameter);
 	Map<Parameter, List<String>> getAllQueryParameters();
+
+	String getCookie(Cookie cookie);
+	Map<Cookie, String> getAllCookies();
+
+
 }
