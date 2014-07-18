@@ -8,7 +8,7 @@ import org.mockito.runners.MockitoJUnitRunner;
 
 import static org.mockito.Mockito.verify;
 import static uk.co.boombastech.http.Cookie.cookieName;
-
+import static uk.co.boombastech.http.HttpStatus.OK;
 
 @RunWith(MockitoJUnitRunner.class)
 public class SparkResponseTest {
@@ -35,5 +35,19 @@ public class SparkResponseTest {
 		response.setCookie(cookieName, "some value", 123);
 
 		verify(wrappedResponse).cookie(cookieName.name(), "some value", 123, cookieName.isDefaultSecured());
+	}
+
+	@Test
+	public void shouldSetCookieWithMaxAgeAndSecuredSet() throws Exception {
+		response.setCookie(cookieName, "some value", 123, true);
+
+		verify(wrappedResponse).cookie(cookieName.name(), "some value", 123, true);
+	}
+
+	@Test
+	public void shouldSetHttpStatusOnResponse() throws Exception {
+		response.setStatus(OK);
+
+		verify(wrappedResponse).status(OK.getStatusCode());
 	}
 }

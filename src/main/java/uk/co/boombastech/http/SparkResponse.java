@@ -22,4 +22,9 @@ public class SparkResponse implements Response {
 	public void setCookie(Cookie cookie, String value, int maxAge, boolean secured) {
 		wrappedResponse.cookie(cookie.name(), value, maxAge, secured);
 	}
+
+	@Override
+	public void setStatus(HttpStatus status) {
+		wrappedResponse.status(status.getStatusCode());
+	}
 }
